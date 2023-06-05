@@ -1,5 +1,6 @@
 package com.proyect.appcrud.Service;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.proyect.appcrud.DTO.RequestDTO;
 import com.proyect.appcrud.DTO.ResponseDTO;
 import com.proyect.appcrud.Entity.User;
@@ -13,7 +14,7 @@ public interface IUserService {
     ResponseDTO getUserById(Long id);
     List<ResponseDTO> getAllUsers();
     ResponseDTO createNewUser(RequestDTO requestDTO);
-    ResponseDTO updateUser(Long id, RequestDTO requestDTO);
+    ResponseDTO updateUser(Long id, RequestDTO requestDTO) throws JsonMappingException;
     String deleteUser(Long id);
 
     //Metodo para convertir User a ResponseDTO

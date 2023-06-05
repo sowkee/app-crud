@@ -1,11 +1,11 @@
 package com.proyect.appcrud.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Component;
 
-@JsonIgnoreProperties
-@JsonSerialize
+
 @Component
 public class ResponseDTO extends RequestDTO{
+    @JsonIgnore
+    private String userPassword;
 }

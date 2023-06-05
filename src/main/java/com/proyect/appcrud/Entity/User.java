@@ -1,7 +1,5 @@
 package com.proyect.appcrud.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
@@ -16,7 +14,7 @@ public class User {
     @Column(name = "USER_NAME")
     private String userName;
 
-    @JsonIgnore
+
     @Column(name = "USER_PASSWORD")
     private String userPassword;
 

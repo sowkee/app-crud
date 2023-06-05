@@ -1,9 +1,10 @@
 package com.proyect.appcrud.Controller;
 
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.proyect.appcrud.DTO.RequestDTO;
 import com.proyect.appcrud.DTO.ResponseDTO;
-import com.proyect.appcrud.Entity.User;
+import com.proyect.appcrud.Exception.UserNotFoundException;
 import com.proyect.appcrud.Service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,14 +21,11 @@ public class UserController {
 
     @Autowired
     IUserService iUserService;
-    @Autowired
-    ResponseDTO responseDTO;
 
     @GetMapping("get/all")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> getAllUsers () {
         Map<String, Object> res = new HashMap<>();
-
         List<ResponseDTO> listResponseDTO = this.iUserService.getAllUsers();
         res.put("status", HttpStatus.OK);
         res.put("data", listResponseDTO);
@@ -62,17 +60,22 @@ public class UserController {
 
     @PutMapping("update/{id}")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable Long id, @RequestBody RequestDTO requestDTO) {
+    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable Long id, @RequestBody RequestDTO requestDTO) throws JsonMappingException {
         Map<String, Object> res = new HashMap<>();
-        ResponseDTO response = this.iUserService.updateUser(id, requestDTO);
-        if (response != null){
+        try {
+            ResponseDTO response = this.iUserService.updateUser(id, requestDTO);
             res.put("status", HttpStatus.OK);
             res.put("data", response);
             return new ResponseEntity<>(res, HttpStatus.OK);
+        } catch (UserNotFoundException e) {
+            res.put("status", HttpStatus.NOT_FOUND);
+            res.put("message", "User not found.");
+            return new ResponseEntity<>(res, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            res.put("status", HttpStatus.BAD_REQUEST);
+            res.put("message", "Failed to update user.");
+            return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
         }
-        res.put("status", HttpStatus.NOT_FOUND);
-        res.put("message", "Fail.");
-        return new ResponseEntity<>(res, HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("delete/{id}")
