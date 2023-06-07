@@ -3,26 +3,24 @@ package com.proyect.appcrud.Entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "USUARIO")
 public class User {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private long id;
     @Column(name = "USER_NAME")
     private String userName;
-
-
-    @Column(name = "USER_PASSWORD")
+    @Column(name = "PASSWORD")
     private String userPassword;
+    @Column(name = "CARD_NUMBER")
+    private String cardNumber;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -40,5 +38,13 @@ public class User {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 }
